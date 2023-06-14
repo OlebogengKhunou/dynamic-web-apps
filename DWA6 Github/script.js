@@ -17,10 +17,10 @@ let matches = books
  * Function to loop through called objects (genre and author) as a parameters
  * then creates an element with an html template containing object property values
  * then appending the document fragment.
- * @param {*} details an object with a slice function to limit books being displayed
- * @param {string} DocumentFragment a document fragment to append the created element in the function
+ * @param {Object[]} details - an object with a slice function to limit books being displayed
+ * @param {HTMLElement} DocumentFragment - a document fragment to append the created element in the function
  */
-function element1(details, DocumentFragment) {
+function createBook(details, DocumentFragment) {
     for (const { author, id, image, title } of details) {
         const element = document.createElement('button')
         element.classList = 'preview'
@@ -46,7 +46,7 @@ function element1(details, DocumentFragment) {
  * when the code if first run
  */
 const starting = document.createDocumentFragment()
-element1(matches.slice(0, BOOKS_PER_PAGE), starting)
+createBook(matches.slice(0, BOOKS_PER_PAGE), starting)
 dataList.dataListItems.appendChild(starting)
 
 /**
@@ -162,12 +162,12 @@ settings.dataSettingsForm.addEventListener('submit', (event) => {
 
 /** 
  * Function to loop through called objects (genre and author) as parameters then appending object property values in the option elements. 
- * @param {object} option object to be looped through
- * @param {string} firstOption first option that appears in the authors and genres selects on the search form.
- * @returns {string} a document fragment
+ * @param {Object} option - object to be looped through
+ * @param {string} firstOption - first option that appears in the authors and genres selects on the search form.
+ * @returns {HTMLElement} - a document fragment
  */
 
-function SearchOption(option, firstOption) {
+function createSearchOption(option, firstOption) {
     const SearchHtml = document.createDocumentFragment()
     const firstOptionsElement = document.createElement('option')
     firstOptionsElement.value = 'any'
@@ -183,8 +183,8 @@ function SearchOption(option, firstOption) {
     return SearchHtml
 }
 
-search.dataSearchGenres.appendChild(SearchOption(genres, 'Genres'))
-search.dataSearchAuthors.appendChild(SearchOption(authors, 'Authors'))
+search.dataSearchGenres.appendChild(createSearchOption(genres, 'Genres'))
+search.dataSearchAuthors.appendChild(createSearchOption(authors, 'Authors'))
 
 /**
  * Whenever the search button is clicked all the books show will disappear as new books html is created
@@ -225,7 +225,7 @@ search.dataSearchForm.addEventListener('submit', (event) => {
     dataList.dataListItems.innerHTML = ''
 
     const newItems = document.createDocumentFragment()
-    element1(result.slice(0, BOOKS_PER_PAGE), newItems)
+    createBook(result.slice(0, BOOKS_PER_PAGE), newItems)
     dataList.dataListItems.appendChild(newItems)
 
     dataList.dataListButton.disabled = (matches.length - (page * BOOKS_PER_PAGE)) < 1
@@ -251,7 +251,7 @@ search.dataSearchForm.addEventListener('submit', (event) => {
 dataList.dataListButton.addEventListener('click', () => {
     page += 1
     const fragment = document.createDocumentFragment()
-    element1(matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE), fragment)
+    createBook(matches.slice(page * BOOKS_PER_PAGE, (page + 1) * BOOKS_PER_PAGE), fragment)
     dataList.dataListItems.appendChild(fragment)
     
     dataList.dataListButton.disabled = (matches.length - (page * BOOKS_PER_PAGE)) <= 0
