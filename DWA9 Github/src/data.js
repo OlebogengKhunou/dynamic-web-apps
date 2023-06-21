@@ -25432,6 +25432,7 @@ export const settings = {
 
 export const dataList = {
     dataListItems: document.querySelector('[data-list-items]'),
+    customElementbookListItems: document.querySelector('[customElement-bookListItems]'),
     dataListClose: document.querySelector('[data-list-close]'),
     dataListActive: document.querySelector('[data-list-active]'),
     dataListButton: document.querySelector('[data-list-button]'),

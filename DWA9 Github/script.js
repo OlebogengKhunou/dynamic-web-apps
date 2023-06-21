@@ -2,7 +2,6 @@ import { books, authors, genres, BOOKS_PER_PAGE, settings, search, dataList } fr
 import { showBookDetails, createBook} from './modules/preview.js'
 import { createSearchOption } from './modules/search.js'
 import { checkTheme, setTheme } from './modules/settings.js'
-import { BookPreview } from './previewWebComponent.js'
 
 
 let page = 1;
@@ -10,23 +9,21 @@ let matches = books
 
 
 //FIRST BOOKS
-
 /**
  * - creating a document fragment then calling a fuction with the document fragment as a second parameter
  * while the first parameter as a slice of the matches object to display the first 36 books from the matches object
  * when the code if first run
  */
-
- const booklistitems = document.querySelector('booklist-items');
- booklistitems.render(0, BOOKS_PER_PAGE);
+const starting = document.createDocumentFragment();
+createBook(matches.slice(0, BOOKS_PER_PAGE),starting);
+dataList.customElementbookListItems.appendChild(starting);
  
 
+//SHOW BOOK DETAILS
 /**
  * Whenever each book is clicked upon an overlay will appear with that books details looped through the books object.
  */
-dataList.dataListItems.addEventListener('click', (event) => {})
 showBookDetails ()
-
 
 
 /**
@@ -61,7 +58,6 @@ setTheme()
 
 
 //SEARCH SECTION
-
 /**
  *  Whenever the genres or authors select element is clicked the dropdown list of 
  *  all genres or authors will show and the user will choose one
@@ -106,11 +102,11 @@ search.dataSearchForm.addEventListener('submit', (event) => {
         dataList.dataListMessage.classList.remove('list__message_show')
     }
 
-    dataList.dataListItems.innerHTML = ''
+    dataList.customElementbookListItems.innerHTML = ''
 
     const newItems = document.createDocumentFragment()
     createBook(result.slice(0, BOOKS_PER_PAGE), newItems)
-    dataList.dataListItems.appendChild(newItems)
+    dataList.customElementbookListItems.appendChild(newItems)
 
 
     dataList.dataListButton.disabled = (matches.length - (page * BOOKS_PER_PAGE)) < 1
@@ -125,16 +121,16 @@ search.dataSearchForm.addEventListener('submit', (event) => {
 
 
 //SHOWMORE BUTTON SECTION
-
 /**
  * Whenever the show more button is clicked the more books html will be created 
  * then the number of books left unshown is updated in the show more button text
  */
 
 dataList.dataListButton.addEventListener('click', function () {
-   
-    const booklistitems = document.querySelector('booklist-items');
-    booklistitems.render((page * BOOKS_PER_PAGE), ((page + 1) * BOOKS_PER_PAGE));
+    const fragment = document.createDocumentFragment();
+    createBook(matches.slice((page * BOOKS_PER_PAGE), ((page + 1) * BOOKS_PER_PAGE)),fragment);
+    dataList.customElementbookListItems.appendChild(fragment);
+    
     page += 1
     dataList.dataListButton.disabled = (books.length - (page * BOOKS_PER_PAGE)) <= 0
     dataList.dataListButton.innerHTML = `

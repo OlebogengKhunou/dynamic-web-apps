@@ -17,12 +17,12 @@ export function createBook(details, DocumentFragment) {
 
         element.innerHTML = `
         <img
-            class="preview__image"
+            class="preview__image" slot="profile-image"
             src="${image}"
         />
         <div class="preview__info">
-            <h3 class="preview__title">${title}</h3>
-            <div class="preview__author">${authors[author]}</div>
+            <h3 class="preview__title" slot="title">${title}</h3>
+            <div class="preview__author" slot="author">${authors[author]}</div>
         </div>
     `
         DocumentFragment.appendChild(element)
@@ -35,7 +35,7 @@ export function createBook(details, DocumentFragment) {
  *  opens the over lay to display the ingo and image of the book
  */
 export function showBookDetails() {
-    dataList.dataListItems.addEventListener('click', (event) => {
+    dataList.customElementbookListItems.addEventListener('click', (event) => {
         const pathArray = Array.from(event.path || event.composedPath())
         let active = null
 
