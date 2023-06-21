@@ -2,12 +2,12 @@ import { books, authors, genres, BOOKS_PER_PAGE, settings, search, dataList } fr
 import { showBookDetails, createBook} from './modules/preview.js'
 import { createSearchOption } from './modules/search.js'
 import { checkTheme, setTheme } from './modules/settings.js'
+import { bookData } from './src/encapsulation.js'
 
 
-
-let page = 1;
-let matches = books
-
+// Accessing the encapsulated variables
+  let page = bookData.getPage();
+  let matches = bookData.getMatches()
 
 //FIRST BOOKS
 
