@@ -1,5 +1,7 @@
 import { settings } from '../src/data.js'
 
+function settingsFunctionality () {
+
 /**
  *-  function that sets the HTML DOM Style color Property to night theme mode
  * using RGB template.
@@ -23,7 +25,7 @@ function lighttheme() {
  *   then changing the value of select element in the form to 'night' or 'day'.  
  */
 
-export function checkTheme(){
+ function checkTheme(){
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         settings.dataSettingsTheme.value = 'night'
         darktheme()
@@ -37,7 +39,7 @@ export function checkTheme(){
  *  - function that sets the theme of window based on the option selected
  *    on the form whenever the settings save button is clicked to submit.
  */
-export function setTheme(){
+function setTheme(){
     settings.dataSettingsForm.addEventListener('submit', (event) => {
         event.preventDefault()
         const formData = new FormData(event.target)
@@ -51,3 +53,20 @@ export function setTheme(){
         settings.dataSettingsOverlay.open = false
     })
 }
+
+// button to display the settings overlay
+settings.dataSettingsCancel.addEventListener('click', () => {
+    settings.dataSettingsOverlay.open = false
+})
+
+// button to close the settings overlay
+settings.dataHeaderSettings.addEventListener('click', () => {
+    settings.dataSettingsOverlay.open = true
+})
+
+//return
+checkTheme()
+setTheme()
+}
+
+settingsFunctionality ()

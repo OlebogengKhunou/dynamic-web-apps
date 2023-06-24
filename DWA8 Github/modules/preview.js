@@ -1,7 +1,6 @@
 import { authors, dataList, books } from '../src/data.js'
 
-//FIRST RUN DISPLAY SECTION
-
+//FIRST RUN USER INTERFACE
 /**
  * - Function to loop through called objects (genre and author) as a parameters
  * then creates an element with an html template containing object property values
@@ -29,10 +28,12 @@ export function createBook(details, DocumentFragment) {
     }
 }
 
+
+//SHOWMORE BUTTON SECTION
 /**
  * - Whenever each book is clicked upon an overlay will appear with that books details looped through the books object.
  */
-export function showBookDetails () {
+function showBookDetails () {
     dataList.dataListItems.addEventListener('click', (event) => {
         const pathArray = Array.from(event.path || event.composedPath())
         let active = null
@@ -61,4 +62,12 @@ export function showBookDetails () {
             document.querySelector('[data-list-description]').innerText = active.description
         }
     })
+
+   
+ // button to display an overlay of each book's details when clicked.
+    dataList.dataListClose.addEventListener('click', () => {
+        dataList.dataListActive.open = false
+    })
 }
+
+showBookDetails ()
