@@ -1,7 +1,6 @@
 import { authors, dataList, books } from '../src/data.js'
 
-//FIRST RUN DISPLAY SECTION
-
+//FIRST RUN USER INTERFACE
 /**
  * - Function to loop through called objects (genre and author) as a parameters
  * then creates an element with an html template containing object property values
@@ -11,30 +10,26 @@ import { authors, dataList, books } from '../src/data.js'
  */
 export function createBook(details, DocumentFragment) {
     for (const { author, id, image, title } of details) {
-        const element = document.createElement('button')
+        const element = document.createElement('booklist-items')
         element.classList = 'preview'
         element.setAttribute('data-preview', id)
 
-        element.innerHTML = `
-        <img
-            class="preview__image" slot="profile-image"
-            src="${image}"
-        />
-        <div class="preview__info">
-            <h3 class="preview__title" slot="title">${title}</h3>
-            <div class="preview__author" slot="author">${authors[author]}</div>
-        </div>
+        element.innerHTML = /*HTML*/ `
+        <img class="preview__image" slot="book-image" src="${image}" />
+        <h3 class="preview__title" slot="title1">${title}</h3>
+        <div class="preview__author" slot="author1">${authors[author]}</div>
     `
+
         DocumentFragment.appendChild(element)
     }
 }
 
+
+//SHOWMORE BUTTON SECTION
 /**
- * - Function to loop the node of the object the returns properties like title, descrition, 
- *  the author and publish date of the book the rewrite relevant html elements' innertext then 
- *  opens the over lay to display the ingo and image of the book
+ * - Whenever each book is clicked upon an overlay will appear with that books details looped through the books object.
  */
-export function showBookDetails() {
+function showBookDetails() {
     dataList.customElementbookListItems.addEventListener('click', (event) => {
         const pathArray = Array.from(event.path || event.composedPath())
         let active = null
@@ -63,4 +58,12 @@ export function showBookDetails() {
             document.querySelector('[data-list-description]').innerText = active.description
         }
     })
+
+
+    // button to display an overlay of each book's details when clicked.
+    dataList.dataListClose.addEventListener('click', () => {
+        dataList.dataListActive.open = false
+    })
 }
+
+showBookDetails()

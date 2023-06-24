@@ -24,9 +24,13 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&display=swap" rel="stylesheet" />
 
-  <script src="./script.js" defer type="module"></script>
+  <script src="./src/script.js" defer type="module"></script>
   <script src="./src/data.js" defer type="module"></script>
-  <script src="./previewWebComponent.js" defer type="module"></script>
+  <script src="./modules/settings.js"></script>
+  <script src="./modules/search.js"></script>
+  <script src="./modules/preview.js" defer type="module"></script>
+  <script src="./src/previewWebComponent.js" defer type="module"></script>
+
 
 </head>
 
@@ -76,19 +80,15 @@
   </header>
 
   <main class="list">
+    <div class="list__items" customElement-bookListItems >
+      <!-- custom element -->
+    </div>
 
-    <!-- custom element -->
-    <booklist-items customElement-bookListItems class="list__items">
-    </booklist-items>
-
-    <template data-list-items>
-      <slot name="profile-image"><img class="preview__image" src="https://assets.codepen.io/1804713/default.png" alt="">
-      </slot>
-      <h3 class="preview__title">
-        <slot name="title">${title}</slot>
-      </h3>
-      <div class="preview__author">
-        <slot name="author">${authors[author]}</slot>
+    <template data-list-items >
+      <slot name="book-image"><img class="preview__image" src="https://assets.codepen.io/1804713/default.png" alt=""></slot>
+      <div class="preview__info">
+      <h3 ><slot name="title1">placeHolderTitle</slot></h3>
+      <div><slot name="author1">placeHolderAuthor</slot></div>
       </div>
     </template>
 

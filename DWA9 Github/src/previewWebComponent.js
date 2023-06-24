@@ -1,4 +1,4 @@
-export class BookPreview extends HTMLElement {
+class BookPreview extends HTMLElement {
     constructor() {
         super();
         let profile = document.querySelector('[data-list-items]')
@@ -6,3 +6,4 @@ export class BookPreview extends HTMLElement {
         const shadowRoot = this.attachShadow({mode: 'open'}).appendChild(myprofile.cloneNode(true));
     }
 }
+customElements.define('booklist-items', BookPreview)
