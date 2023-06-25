@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tally Count</title>
+
+    <link rel="stylesheet" href="./SRC/CSS/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap" rel="stylesheet">
+
+    <script src="./SRC/JAVA/script.js" defer></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.1/cdn/themes/light.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.5.1/cdn/shoelace-autoloader.js"
+        defer></script>
+
+
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="header__title">
+            Tally Count
+        </h1>
+    </header>
+
+    <main class="counter">
+        <input class="counter_value" data-key="number" readonly value="0">
+        <div class="counter_actions">
+            <sl-button size="large" data-key="subtract" pill>-</sl-button>
+            <sl-button size="large" data-key="reset" pill>C</sl-button>
+            <sl-button size="large" data-key="add" pill>+</sl-button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        Inspired by <a class="footer_link" href="https://tallycount.app/">Tally Count</a>. Note that this
+        is merely a student practice project for learning javascript
+    </footer>
+    
+</body>
+
+</html>
