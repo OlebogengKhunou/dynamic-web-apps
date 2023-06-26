@@ -12,11 +12,14 @@ const store = {
     count: currentNumber.value,
     observers: [],
 
-    addObserver(observer) {
+    subscribe(observer) {
         this.observers.push(observer);
+        return () => {
+            this.unsubscribe(observer);
+        };
     },
 
-    removeObserver(observer) {
+    unsubscribe(observer) {
         const index = this.observers.indexOf(observer);
         if (index !== -1) {
             this.observers.splice(index, 1);
@@ -29,32 +32,46 @@ const store = {
         }
     },
 
-    reset(value = 0) {
-        this.count = value;
-        this.notifyObservers();
+    dispatch(action) {
+        switch (action.type) {
+            case 'INCREMENT':
+                this.count++;
+                // currentNumber.value = this.count // incrementing the number on the counter based on the dispatch.
+                break;
+            case 'DECREMENT':
+                this.count--;
+                // currentNumber.value = this.count // decrementing the number on the counter based on the dispatch.
+                break;
+            case 'RESET':
+                this.count = action.payload || 0;
+                break;
+            default:
+                break;
+        }
+        this.notifyObservers()
     },
 
     getState() {
         return this.count;
-    },
-
-    increment() {
-        this.count++;
-        this.notifyObservers();
-        currentNumber.value = this.count
-    },
-
-    decrement() {
-        this.count--;
-        this.notifyObservers();
-        currentNumber.value = this.count
     }
 };
 
 // Observer component
 class Observer {
     constructor() {
-        store.addObserver(this);
+        this.update = this.update.bind(this);
+        this.unsubscribe = null;
+    }
+
+    subscribeToStore() {
+        this.unsubscribe = store.subscribe(this);
+    }
+
+    unsubscribeFromStore() {
+        if (this.unsubscribe) {
+            this.unsubscribe();
+            this.unsubscribe = null;
+        }
     }
 
     update(count) {
@@ -65,28 +82,33 @@ class Observer {
 
 // Usage
 const observer1 = new Observer();
+const observer2 = new Observer();
+observer1.subscribeToStore();// added to store
+observer1.unsubscribeFromStore();// removed from store
+observer2.subscribeToStore();//added to store (currently)
 
-console.log(`Intial Count: ${store.getState()}`)
+console.log(`State: ${store.getState()}`)
+store.dispatch({ type: 'INCREMENT' });
+store.dispatch({ type: 'INCREMENT' });
+store.dispatch({ type: 'DECREMENT' });
+store.dispatch({ type: 'RESET' });
 
-function handleIncrement() {
+
+//dispatch when a button is clicked
+/*function handleIncrement() {
+    store.dispatch({ type: 'INCREMENT'});
     if (subtract.disabled === true) {
         subtract.disabled = false
-    }
-    if (currentNumber.value < MAX_NUMBER) {
-        store.increment();
     }
     if (currentNumber.value >= MAX_NUMBER) {
         add.disabled = true
     }
-
 }
 
 function handleDecrement() {
+    store.dispatch({ type: 'DECREMENT'});
     if (add.disabled === true) {
         add.disabled = false
-    }
-    if (currentNumber.value > MIN_NUMBER) {
-        store.decrement();
     }
     if (currentNumber.value <= MIN_NUMBER) {
         subtract.disabled = true
@@ -94,7 +116,7 @@ function handleDecrement() {
 }
 
 function handleReset() {
-    store.reset();
+    store.dispatch({ type: 'RESET'});
     currentNumber.value = 0
     add.disabled = false
     subtract.disabled = false
@@ -106,5 +128,5 @@ function handleReset() {
 subtract.addEventListener('click', handleDecrement)
 add.addEventListener('click', handleIncrement)
 reset.addEventListener('click', handleReset)
-
+*/
 
