@@ -35,6 +35,8 @@ const resetHandler = () => {
 
     if (currentNumber.value < 0 || currentNumber.value > 0) {
         currentNumber.value = 0
+        subtract.disabled = false
+        add.disabled = false
         setTimeout(function() {
             alert("counter has been reset");
         },10)
