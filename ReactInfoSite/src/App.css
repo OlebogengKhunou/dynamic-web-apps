@@ -36,6 +36,14 @@ nav {
 .nav--icon {
   height: 30px;
   margin-right: 7px;
+  animation-name: spin;
+  animation-duration: 5000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+}
+
+.nav--icon:hover{
+  filter: drop-shadow(0 0 2em #fcfcfc);
 }
 
 main {
@@ -70,4 +78,13 @@ main {
 .main--facts > li::marker {
   font-size: 1.4rem;
   color: #61DAFB;
+}
+
+@keyframes spin {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
 }
